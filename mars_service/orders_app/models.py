@@ -22,11 +22,11 @@ class Customer(models.Model):
         verbose_name_plural = "Description contragents"
 
     customer_name = models.TextField(verbose_name="Name organization")
-    customer_address = models.TextField(verbose_name="Street")
+    customer_address = models.TextField(verbose_name="address")
     customer_city = models.TextField(verbose_name="City")
 
     def __str__(self):
-        return f"{self.customer_name} on street: {self.customer_address}"
+        return f"{self.customer_name} address: {self.customer_address}"
 
 
 class DeviceInField(models.Model):
@@ -41,7 +41,7 @@ class DeviceInField(models.Model):
     owner_status = models.TextField(verbose_name="Owner status")
 
     def __str__(self):
-        return f"{self.analyzer} с/н {self.serial_number} в {self.customer}"
+        return f"{self.analyzer} s/n {self.serial_number} in {self.customer}"
 
 
 class Order(models.Model):
@@ -58,11 +58,11 @@ class Order(models.Model):
     device = models.ForeignKey(DeviceInField, verbose_name="equipment", on_delete=models.RESTRICT)
     order_description = models.TextField(verbose_name="description")
     created_dt = models.DateTimeField(verbose_name="Created", auto_now_add=True)
-    last_updated_dt = models.DateTimeField(verbose_name="Last update", blank=True, null=True)
+    last_update_data = models.DateTimeField(verbose_name="last update", blank=True, null=True)
     order_status = models.TextField(verbose_name="Order status", choices=statuses)
 
     def __str__(self):
-        return f"Order №{self.id} для {self.device}"
+        return f"Order №{self.id} for {self.device}"
 
     def save(self, *args, **kwargs):
         self.last_updated_dt = datetime.now()
